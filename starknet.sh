@@ -4,11 +4,11 @@ exists()
   command -v "$1" >/dev/null 2>&1
 }
 if exists curl; then
-  echo ''
+	echo ''
 else
   sudo apt install curl -y < "/dev/null"
 fi
-sleep 1 && curl -s https://raw.githubusercontent.com/cryptology-nodes/main/main/logo.sh |  bash && sleep 2
+curl -s https://raw.githubusercontent.com/cryptology-nodes/main/main/logo.sh | bash
 echo "==================================================="
 sleep 2
 sudo apt update -y && sudo apt install curl git tmux python3 python3-venv python3-dev build-essential libgmp-dev pkg-config libssl-dev -y
@@ -49,8 +49,11 @@ sudo systemctl daemon-reload
 sudo systemctl enable starknetd
 sudo systemctl restart starknetd
 echo "==================================================="
+echo -e '\n\e[42mCheck node status\e[0m\n' && sleep 1
 if [[ `service starknetd status | grep active` =~ "running" ]]; then
-  echo -e "Ваша StarkNet нода \e[32mустановлена и работает\e[39m!"
+  echo -e "Your StarkNet node \e[32minstalled and works\e[39m!"
+  echo -e "You can check node status by the command \e[7mservice starknetd status\e[0m"
+  echo -e "Press \e[7mQ\e[0m for exit from status menu"
 else
-  echo -e "Ваша StarkNet нода \e[31mбыла установлена неправильно\e[39m, попробуйте переустановить ноду"
+  echo -e "Your StarkNet node \e[31mwas not installed correctly\e[39m, please reinstall."
 fi
